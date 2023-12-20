@@ -63,6 +63,21 @@ namespace Detached.Mappers
         Append
     }
 
+    /// <summary>
+    /// Expected behavior when a null value is mapped to a collection marked as composition
+    /// </summary>
+    public enum NullCompositeEntityCollectionBehavior
+    {
+        /// <summary>
+        /// Target collection is cleared of all items
+        /// </summary>
+        Clear,
+        /// <summary>
+        /// Target collection is set to Null
+        /// </summary>
+        SetNull
+    }
+
     public class MapParameters
     {
         /// <summary>
@@ -99,6 +114,14 @@ namespace Detached.Mappers
         /// Default: Merge. Use Append only in a controlled context, otherwise it could end in tons of duplicated entities.
         /// </summary>
         public CompositeCollectionBehavior CompositeCollectionBehavior { get; set; } = CompositeCollectionBehavior.Merge;
+
+        /// <summary>
+        /// Expected behavior when an collection marked as Composition is mapped and the source is null
+        /// Setting this behavior to Clear wil set to target to an empty collection, setting to SetNull will set the target to null
+        /// Default: Clear. Set is as SetNull to handle collection marked as Composition to be compatible with EntityFramework i.e.
+        /// null source will not change the collection in the database. 
+        /// </summary>
+        public NullCompositeEntityCollectionBehavior NullCompositeEntityCollectionBehavior { get; set; } = NullCompositeEntityCollectionBehavior.Clear;
 
         /// <summary>
         /// If true, when root entity is not found, then it is created; otherwise, an exception is thrown.

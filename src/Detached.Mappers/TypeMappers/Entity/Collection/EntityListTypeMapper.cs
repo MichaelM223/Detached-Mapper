@@ -31,6 +31,11 @@ namespace Detached.Mappers.TypeMappers.Entity.Collection
         {
             Dictionary<TKey, TTargetItem> table = new Dictionary<TKey, TTargetItem>();
 
+            if (source == null && context.Parameters.NullCompositeEntityCollectionBehavior == NullCompositeEntityCollectionBehavior.SetNull)
+            {
+                return target;
+            }
+
             if (target == null)
             {
                 target = _construct(context);
