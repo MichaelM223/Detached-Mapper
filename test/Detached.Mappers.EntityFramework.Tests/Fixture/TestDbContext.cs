@@ -24,8 +24,7 @@ namespace Detached.Mappers.EntityFramework.Tests.Fixture
 
             services.AddDbContext<TDbContext>(opts =>
             {
-                 opts//.UseSqlite($"DataSource=file:{dbName}?mode=memory&cache=shared")
-                     .UseSqlServer($"Server=localhost\\SQLEXPRESS;Database={dbName};User Id=sa;Password=Sa12345.;Encrypt=False;")
+                 opts.UseInMemoryDatabase(dbName)
                      .EnableSensitiveDataLogging()
                      .EnableDetailedErrors()
                      .UseMapping();
